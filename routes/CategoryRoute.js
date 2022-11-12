@@ -3,14 +3,18 @@ const router = Router({ mergeParams: true })
 const categoryService = require("../services/CategoryService")
 const { createCategoryDto } = require("../dtos/CategoryDTO")
 const { CustomError } = require("../errors/CustomError")
+const {uploadFile} = require("../middlewares/UploadFile")
 
 router
-    .post("/", async (req, res) => {
+    .post("/", uploadFile, async (req, res) => {
         try {
+            let img = ""
+            if(req.file !== null && req.file !== undefined)
+                img = req.file.filename
             const categoryDTO = createCategoryDto(req.body)
             if (categoryDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(categoryDTO.errMessage, 400)
-            const createdCategory = await categoryService.create(categoryDTO.data)
+            const createdCategory = await categoryService.create({...categoryDTO.data,img})
             res.status(201).json(createdCategory)
 
         } catch (error) {
