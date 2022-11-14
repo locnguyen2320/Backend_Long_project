@@ -11,7 +11,7 @@ router
             let img = ""
             if(req.file !== null && req.file !== undefined)
                 img = req.file.filename
-            const categoryDTO = createCategoryDto(req.body)
+            const categoryDTO = createCategoryDto({...req.body, img})
             if (categoryDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(categoryDTO.errMessage, 400)
             const createdCategory = await categoryService.create({...categoryDTO.data,img})
@@ -33,6 +33,15 @@ router
         } catch (error) {
             res.status(500).json(error)
         }
+    })
+    .delete('/:id',(req,res)=>{
+        categoryService.remove(req.params.id)
+        .then(category=>{
+            return res.status(200).json(category);
+        })
+        .catch(err=>{
+            res.status(400).json({message:err})
+        })
     })
 
 module.exports = { router }

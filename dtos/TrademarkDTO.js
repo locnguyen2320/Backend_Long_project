@@ -1,5 +1,5 @@
 const { validateString } = require("../validations/IsEmpty")
-function createCategoryDto(reqBody) {
+function createTrademarkDto(reqBody) {
     console.log(reqBody)
     const input = reqBody
     
@@ -10,4 +10,4 @@ function createCategoryDto(reqBody) {
     return { data: {name: input.name, img: input.img} }
 }
 
-module.exports = { createCategoryDto }
+module.exports = { createTrademarkDto }

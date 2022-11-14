@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const abstractModel  = require("./AbstractModel");
 
-const categorySchema = new mongoose.Schema({
+const trademarkSchema = new mongoose.Schema({
     ...abstractModel,
     name: {
         type: String,
@@ -12,7 +12,6 @@ const categorySchema = new mongoose.Schema({
     },
 });
 
-categorySchema.plugin(mongoosePaginate)
-const category = mongoose.model("category", categorySchema);
+const trademark = mongoose.model("trademark", trademarkSchema);
 
-module.exports = category;
+module.exports = trademark;
