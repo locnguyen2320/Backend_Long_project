@@ -1,5 +1,5 @@
 const { validateString } = require("../Validations/IsEmpty")
-function createTrademarkDto(reqBody) {
+function createProductDto(reqBody) {
     console.log(reqBody)
     const input = reqBody
     
@@ -7,7 +7,10 @@ function createTrademarkDto(reqBody) {
         return { errMessage: "trường 'name' chưa hợp lệ" }
     if (validateString(input.img))
         return { errMessage: "trường 'img' chưa hợp lệ" }
-    return { data: {name: input.name, img: input.img} }
+    if (validateString(input.price))
+        return { errMessage: "trường 'price' chưa hợp lệ" }   
+
+    return { data: {name: input.name, img: input.img,price: input.price} }
 }
 
-module.exports = { createTrademarkDto }
+module.exports = { createProductDto }

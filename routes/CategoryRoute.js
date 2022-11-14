@@ -3,6 +3,7 @@ const router = Router({ mergeParams: true })
 const categoryService = require("../services/CategoryService")
 const { createCategoryDto } = require("../dtos/CategoryDTO")
 const { CustomError } = require("../errors/CustomError")
+const category = require('../models/CategoryModel')
 
 router
     .post("/", async (req, res) => {
@@ -29,6 +30,15 @@ router
         } catch (error) {
             res.status(500).json(error)
         }
+    })
+    .delete('/:id',(req,res)=>{
+        categoryService.remove(req.params.id)
+        .then(category=>{
+            return res.status(200).json(category);
+        })
+        .catch(err=>{
+            res.status(400).json({message:err})
+        })
     })
 
 module.exports = { router }
