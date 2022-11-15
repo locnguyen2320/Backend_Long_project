@@ -1,11 +1,11 @@
 const categoryRepo = require('../repositories/CategoryRepo')
-
+//business logic 
 function getAll(){
     return categoryRepo.getAll()
 }
 
 function create(categoryDTO){
-    
+
     return categoryRepo.create(categoryDTO)
 }
 
