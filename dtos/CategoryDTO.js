@@ -1,4 +1,4 @@
-const { validateString } = require("../Validations/IsEmpty")
+const { validateString } = require("../validations/IsEmpty")
 function createCategoryDto(reqBody) {
     console.log(reqBody)
     const input = reqBody

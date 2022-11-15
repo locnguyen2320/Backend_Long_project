@@ -10,8 +10,7 @@ const abstractModel = {
     active: {
         type: Boolean,
         default: true
-    }
+    },
 }
 
 module.exports = abstractModel;
-

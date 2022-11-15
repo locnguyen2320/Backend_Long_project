@@ -1,4 +1,4 @@
-const { validateString } = require("../Validations/IsEmpty")
+const { validateString } = require("../validations/IsEmpty")
 function createTrademarkDto(reqBody) {
     console.log(reqBody)
     const input = reqBody
