@@ -4,6 +4,7 @@ const trademarkService = require("../services/TrademarkService")
 const { createTrademarkDto } = require("../dtos/TrademarkDTO")
 const { CustomError } = require("../errors/CustomError")
 const { uploadFile } = require('../middlewares/UploadFile')
+const trademark = require('../models/TrademarkModel')
 
 router
     .post("/",uploadFile,  async (req, res) => {
@@ -32,6 +33,15 @@ router
         } catch (error) {
             res.status(500).json(error)
         }
+    })
+    .delete('/:id',(req,res)=>{
+        trademarkService.deleteOne(req.params.id)
+        .then(trademark=>{
+            return res.status(200).json(trademark);
+        })
+        .catch(err=>{
+            res.status(400).json({message:err})
+        })
     })
 
 module.exports = { router }

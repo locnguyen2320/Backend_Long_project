@@ -15,5 +15,10 @@ function getById(id){
 function getByName(name){
     return trademarkRepo.getByName(name)
 }
+function deleteOne(id){
+    return trademarkRepo.deleteOne(id)
+}
 
-module.exports = {getAll,create,getById,getByName}
+
+
+module.exports = {getAll,create,getById,getByName,deleteOne}

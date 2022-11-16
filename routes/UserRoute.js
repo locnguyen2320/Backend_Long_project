@@ -6,6 +6,7 @@ const { CustomError } = require('../errors/CustomError')
 const { createUserDto, loginUserDto } = require('../dtos/UserDTO')
 const userService = require("../services/UserService")
 const { signToken } = require('../helpers/signToken')
+const user = require('../models/UserModel')
 
 router
     .post("/register", async (req, res) => {
@@ -48,7 +49,23 @@ router
                 res.status(500).json("Server has something wrong!!")
             console.error(error.toString())
         }
-
+    })
+    .get("/", async (req, res) => {
+        try {
+            const users = await userService.getAll()
+            return res.status(200).json(users)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    })
+    .delete('/:id',(req,res)=>{
+        userService.deleteOne(req.params.id)
+        .then(user=>{
+            return res.status(200).json(user);
+        })
+        .catch(err=>{
+            res.status(400).json({message:err})
+        })
     })
 
 module.exports = { router }

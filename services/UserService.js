@@ -20,4 +20,8 @@ function getByUsername(username){
     return userRepo.getByUsername(username)
 }
 
-module.exports = {getAll,create,getById,getByEmail,getByUsername}
+function deleteOne(id){
+    return userRepo.deleteOne(id)
+}
+
+module.exports = {getAll,create,getById,getByEmail,getByUsername,deleteOne}

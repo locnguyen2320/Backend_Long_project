@@ -21,4 +21,4 @@ function deleteOne(id){
     return categoryRepo.deleteOne(id)
 }
 
-module.exports = {getAll,create,getById,getByName}
+module.exports = {getAll,create,getById,getByName,deleteOne}
