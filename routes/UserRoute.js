@@ -6,6 +6,7 @@ const { CustomError } = require('../errors/CustomError')
 const { createUserDto, loginUserDto } = require('../dtos/UserDTO')
 const userService = require("../services/UserService")
 const { signToken } = require('../helpers/signToken')
+const { verifyToken } = require("../middlewares/VerifyToken")
 
 router
     .post("/register", async (req, res) => {
@@ -35,11 +36,11 @@ router
             const foundUser = await userService.getByUsername(userDTO.data.username)
             if (!foundUser)
                 throw new CustomError("user không tồn tại", 400)
-            const isSamePassword = await bcrypt.compareSync(userDTO.data.password,foundUser.password)
-            if(!isSamePassword)
+            const isSamePassword = await bcrypt.compareSync(userDTO.data.password, foundUser.password)
+            if (!isSamePassword)
                 throw new CustomError("mật khẩu không trùng khớp", 400)
             const signedToken = signToken(foundUser)
-            res.status(201).json({signedToken})
+            res.status(201).json({ signedToken })
         } catch (error) {
             console.log(error)
             if (error instanceof CustomError)
@@ -49,6 +50,13 @@ router
             console.error(error.toString())
         }
 
+    })
+    .get("/", verifyToken, (req, res) => {
+        try {
+            return res.status(200).json(req.user)
+        } catch (error) {
+            return res.status(500).json(error.toString())
+        }
     })
 
 module.exports = { router }

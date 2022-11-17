@@ -7,12 +7,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    quantity: {
-        type: Number,
-        require: true,
-        min: 0,
-        default: 1
-    },
     size: {
         type: String,
         maxLength:4,

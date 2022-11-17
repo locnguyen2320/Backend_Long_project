@@ -1,24 +1,24 @@
 const categoryRepo = require('../repositories/CategoryRepo')
 
-function getAll(){
+function getAll() {
     return categoryRepo.getAll()
 }
 
-function create(categoryDTO){
-    
-    return categoryRepo.create(categoryDTO)
+async function create(categoryDTO) {
+    const session = await mongoose.startSession();
+    return session.withTransaction(categoryRepo.create(categoryDTO))
 }
 
-function getByName(name){
+function getByName(name) {
     return categoryRepo.getByName(name)
 }
 
-function getById(id){
+function getById(id) {
     return categoryRepo.getById(id)
 }
 
-function deleteOne(id){
-    return categoryRepo.deleteOne(id)
+function deleteOne(id) {
+    return session.withTransaction(categoryRepo.deleteOne(id))
 }
 
-module.exports = {getAll,create,getById,getByName}
+module.exports = { getAll, create, getById, getByName }
