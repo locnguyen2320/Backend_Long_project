@@ -1,37 +1,17 @@
 const product = require("../models/ProductModel");
 
-const create = async ({ name, price }) => {
-    return product.create({ name, price })
+const create = async ({ name, description, r_productDetail, r_category, r_trademark }, session) => {
+    return product.create([{ name, description, r_productDetail, r_category, r_trademark }], { session });
 }
 
 const getAll = () => {
-    return product.find({ active: true }).populate("trademark").populate("category");
-};
-
-const getByName = (name) => {
-    return product.findOne({ name });
-};
-
-const getById = (id) => {
-    return product.findById(id);
-};
-
-const deleteOne = (id) => {
-    return product.findOneAndUpdate({ _id: id }, { active: false });
-};
-
-const updateOne = (id, {name,price}) => {
-    return product
-        .findOneAndUpdate({ _id: id }, {name, price}, { new: true })
-        .populate("brand")
-        .populate("category");
+    return product.find({ active: true })
+        .populate("r_trademark")
+        .populate("r_category")
+        .populate("r_productDetail");
 };
 
 module.exports = {
-    create,    
-    deleteOne,
-    updateOne,
-    getAll,
-    getByName,
-    getById
+    create,
+    getAll
 };

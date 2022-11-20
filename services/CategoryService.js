@@ -4,9 +4,9 @@ function getAll() {
     return categoryRepo.getAll()
 }
 
-async function create(categoryDTO) {
-    const session = await mongoose.startSession();
-    return session.withTransaction(categoryRepo.create(categoryDTO))
+async function create(categoryDTO, session) {
+    console.log("service", categoryDTO)
+    return categoryRepo.create(categoryDTO,session)
 }
 
 function getByName(name) {
@@ -17,8 +17,8 @@ function getById(id) {
     return categoryRepo.getById(id)
 }
 
-function deleteOne(id) {
-    return session.withTransaction(categoryRepo.deleteOne(id))
+function deleteOne(id,session) {
+    return session.withTransaction(categoryRepo.deleteOne(id,session))
 }
 
-module.exports = { getAll, create, getById, getByName }
+module.exports = { getAll, create, getById, getByName,deleteOne }

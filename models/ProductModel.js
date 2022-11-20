@@ -11,6 +11,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    r_productDetail: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "productDetail"
+    }],
     r_category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"

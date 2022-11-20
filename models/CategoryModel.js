@@ -5,7 +5,7 @@ const categorySchema = new mongoose.Schema({
     ...abstractModel,
     name: {
         type: String,
-        required: true,
+        required: 'trường "name" phải được truyền vào',
     },
     img: {
         type: String

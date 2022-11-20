@@ -1,28 +1,25 @@
 const { Router } = require('express')
 const router = Router({ mergeParams: true })
-const trademarkService = require("../services/TrademarkService")
-const { createTrademarkDto } = require("../dtos/TrademarkDTO")
+const productService = require("../services/productService")
+const { createProductDto } = require("../dtos/productDTO")
 const { CustomError } = require("../errors/CustomError")
-const { uploadFile } = require('../middlewares/UploadFile')
+const {uploadFile} = require("../middlewares/UploadFile")
 
 const { default: mongoose } = require('mongoose')
 
 router
-    .post("/",uploadFile,  async (req, res) => {
+    .post("/", async (req, res) => {
         const session = await mongoose.startSession()
-
+        session.startTransaction()
         try {
-            let img = ""
-            if(req.file !== null && req.file !== undefined)
-                img = req.file.filename
-            const trademarkDTO = createTrademarkDto({...req.body,img})
-            if (trademarkDTO.hasOwnProperty("errMessage"))
-                throw new CustomError(trademarkDTO.errMessage, 400)
-
-            const createdTrademark = await trademarkService.create(trademarkDTO.data, session)
+            const productDTO = createProductDto({...req.body})
+            if (productDTO.hasOwnProperty("errMessage"))
+                throw new CustomError(productDTO.errMessage, 400)
+            const createdproduct = await productService.create({...productDTO.data}, session)
 
             await session.commitTransaction()
-            res.status(201).json(createdTrademark)
+            res.status(201).json(createdproduct)
+
         } catch (error) {
             await session.abortTransaction();
             session.endSession();
@@ -37,8 +34,8 @@ router
     })
     .get("/", async (req, res) => {
         try {
-            const trademarks = await trademarkService.getAll()
-            return res.status(200).json(trademarks)
+            const categories = await productService.getAll()
+            return res.status(200).json(categories)
         } catch (error) {
             res.status(500).json(error)
         }

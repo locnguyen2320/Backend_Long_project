@@ -10,7 +10,8 @@ function createTrademarkDto(reqBody) {
     if (validateString(input.img))
         errMessages.push("trường 'img' chưa hợp lệ")
     if (errMessages.length > 0)
-        return {errMessage: errMessages.reduce((err, index) => `${index}: ` + err + "\n")}
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
+
 
     return { data: {name: input.name, img: input.img} }
 }

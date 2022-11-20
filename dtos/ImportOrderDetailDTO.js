@@ -19,7 +19,8 @@ function createImportOrderDetailDto(reqBody, index) {
     }
 
     if (errMessages.length > 0)
-        return {errMessage: errMessages.reduce((err, index) => `${index}: ` + err + "\n")}
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
+
 
     return { data: { quantity: input.quantity, price: input.price, r_productDetail: input.r_productDetail } }
 }

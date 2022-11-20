@@ -23,7 +23,8 @@ function createUserDto(reqBody) {
         errMessages.push("trường 'role' chưa hợp lệ")
 
     if (errMessages.length > 0)
-        return {errMessage: errMessages.reduce((err, index) => `${index}: ` + err + "\n")}
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
+
     return {
         data: {
             username: input.username,
@@ -47,8 +48,7 @@ function loginUserDto(reqBody) {
         errMessages.push("trường 'password' chưa hợp lệ")
 
     if (errMessages.length > 0)
-        return {errMessage: errMessages.reduce((err, index) => `${index}: ` + err + "\n")}
-
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
     return {
         data: {
             username: input.username,

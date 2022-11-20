@@ -4,8 +4,8 @@ function getAll(){
     return userRepo.getAll()
 }
 
-function create(userDTO){
-    return userRepo.create(userDTO)
+function create(userDTO, session){
+    return userRepo.create(userDTO, session)
 }
 
 function getById(id){

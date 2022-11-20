@@ -1,7 +1,7 @@
 const trademark  = require("../models/TrademarkModel");
 
-const create = ({name, img})=>{
-   return trademark.create({name, img});
+const create = ({name, img},session)=>{
+   return trademark.create([{name, img}],{session});
 }
 
 const getAll = () => {
@@ -16,12 +16,12 @@ const getByName = (trademarkName) => {
     return trademark.findOne({trademarkName})
 }
 
-const deleteOne = (id) => {
-    return trademark.findOneAndUpdate({_id: id},{active:false})
+const deleteOne = (id,session) => {
+    return trademark.findOneAndUpdate({_id: id},{active:false}).session(session)
 }
 
-const updateOne = (id, { name, img }) =>{
-    return trademark.findOneAndUpdate({_id: id},{ name, img }, {new:true});
+const updateOne = ({id, name, img },session) =>{
+    return trademark.findOneAndUpdate({_id: id},{ name, img }, {new:true}).session(session);
 }
 
 module.exports = {create , getAll, getByName, getAllInActive, deleteOne, updateOne}

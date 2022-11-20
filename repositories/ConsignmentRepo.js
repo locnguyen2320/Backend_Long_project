@@ -1,7 +1,7 @@
 const consignment = require("../models/ConsignmentModel");
 
-const create = ({importPrice, exportPrice, quantity, importedAt, status, r_productDetail}) => {
-    return consignment.create({ importPrice, exportPrice, quantity, importedAt, status, r_productDetail });
+const create = ({importPrice, exportPrice, quantity, importedAt, status, r_productDetail},session) => {
+    return consignment.create([{ importPrice, exportPrice, quantity, importedAt, status, r_productDetail }],{session});
 }
 
 const getAll = () => {
