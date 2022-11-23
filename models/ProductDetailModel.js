@@ -7,12 +7,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    quantity: {
-        type: Number,
-        require: true,
-        min: 0,
-        default: 1
-    },
     size: {
         type: String,
         maxLength:4,
@@ -28,6 +22,6 @@ const productSchema = new mongoose.Schema({
     },
 })
 
-const product = mongoose.model("product",productSchema)
+const productDetail = mongoose.model("productDetail",productSchema)
 
-module.exports = product
+module.exports = productDetail

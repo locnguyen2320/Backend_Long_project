@@ -1,7 +1,7 @@
 const category = require("../models/CategoryModel");
 
-const create = ({ name, img }) => {
-    return category.create({ name, img });
+const create = ({ name, img },session) => {
+    return category.create([{ name, img }],{session});
 }
 
 const getAll = () => {
@@ -16,12 +16,12 @@ const getByName = (name) => {
     return category.findOne({ name })
 }
 
-const deleteOne = (id) => {
-    return category.findOneAndUpdate({ _id: id }, { active: false })
+const deleteOne = (id,session) => {
+    return category.findOneAndUpdate({ _id: id }, { active: false }).session(session)
 }
 
-const updateOne = (id, { name, img }) => {
-    return category.findOneAndUpdate({ _id: id }, { name, img }, { new: true });
+const updateOne = ({id, name, img },session) => {
+    return category.findOneAndUpdate({ _id: id }, { name, img }, { new: true }).session(session);
 }
 
 module.exports = { create, getByName, getAll,  deleteOne, updateOne }

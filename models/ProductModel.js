@@ -7,12 +7,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    price: {
-        type: Number,
-        require: true,
-        min: 0,
-        default: 0
+    description: {
+        type: String,
+        default: ""
     },
+    r_productDetail: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "productDetail"
+    }],
     r_category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"

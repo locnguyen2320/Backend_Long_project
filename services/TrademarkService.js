@@ -4,8 +4,8 @@ function getAll(){
     return trademarkRepo.getAll()
 }
 
-function create(trademarkDTO){
-    return trademarkRepo.create(trademarkDTO)
+function create(trademarkDTO, session){
+    return trademarkRepo.create(trademarkDTO, session)
 }
 
 function getById(id){

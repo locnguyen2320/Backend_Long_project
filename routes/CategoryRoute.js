@@ -3,10 +3,14 @@ const router = Router({ mergeParams: true })
 const categoryService = require("../services/CategoryService")
 const { createCategoryDto } = require("../dtos/CategoryDTO")
 const { CustomError } = require("../errors/CustomError")
-const {uploadFile} = require("../middlewares/UploadFile")
+const {uploadFile, uploadFiles} = require("../middlewares/UploadFile")
+
+const { default: mongoose } = require('mongoose')
 
 router
     .post("/", uploadFile, async (req, res) => {
+        const session = await mongoose.startSession()
+        session.startTransaction()
         try {
             let img = ""
             if(req.file !== null && req.file !== undefined)
@@ -14,10 +18,15 @@ router
             const categoryDTO = createCategoryDto({...req.body, img})
             if (categoryDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(categoryDTO.errMessage, 400)
-            const createdCategory = await categoryService.create({...categoryDTO.data,img})
+            const createdCategory = await categoryService.create({...categoryDTO.data}, session)
+
+            await session.commitTransaction()
             res.status(201).json(createdCategory)
 
         } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
+
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else

@@ -6,8 +6,12 @@ const { CustomError } = require("../errors/CustomError")
 const { uploadFile } = require('../middlewares/UploadFile')
 const trademark = require('../models/TrademarkModel')
 
+const { default: mongoose } = require('mongoose')
+
 router
     .post("/",uploadFile,  async (req, res) => {
+        const session = await mongoose.startSession()
+
         try {
             let img = ""
             if(req.file !== null && req.file !== undefined)
@@ -15,9 +19,15 @@ router
             const trademarkDTO = createTrademarkDto({...req.body,img})
             if (trademarkDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(trademarkDTO.errMessage, 400)
-            const createdTrademark = await trademarkService.create(trademarkDTO.data)
+
+            const createdTrademark = await trademarkService.create(trademarkDTO.data, session)
+
+            await session.commitTransaction()
             res.status(201).json(createdTrademark)
         } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
+
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else

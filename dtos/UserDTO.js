@@ -4,21 +4,27 @@ const UserRoleEnum = require("../enums/UserRole")
 function createUserDto(reqBody) {
     console.log(reqBody)
     const input = reqBody
+    const errMessages = []
 
     if (validateString(input.username))
-        return { errMessage: "trường 'username' chưa hợp lệ" }
+        errMessages.push("trường 'username' chưa hợp lệ")
     if (validateString(input.password))
-        return { errMessage: "trường 'password' chưa hợp lệ" }
+        errMessages.push("trường 'password' chưa hợp lệ")
     if (validateString(input.name))
-        return { errMessage: "trường 'name' chưa hợp lệ" }
-    if (validateEmail(input.email))
-        return { errMessage: "trường 'email' chưa hợp lệ" }
-    if (validatePhone(input.phone))
-        return { errMessage: "trường 'phone' chưa hợp lệ" }
-    if (validateEnum(UserRoleEnum, input.role))
-        return { errMessage: "trường 'role' chưa hợp lệ" }
-    if (validateString(input.address))
+        errMessages.push("trường 'name' chưa hợp lệ")
+    if (validateString(input.email))
+        errMessages.push("trường 'email' chưa hợp lệ")
+    if (validateString(input.phone))
+        errMessages.push("trường 'phone' chưa hợp lệ")
+    if (validateString(input.address)) {
         input.address = ""
+    }
+    if (validateEnum(UserRoleEnum, input.role))
+        errMessages.push("trường 'role' chưa hợp lệ")
+
+    if (errMessages.length > 0)
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
+
     return {
         data: {
             username: input.username,
@@ -34,10 +40,15 @@ function createUserDto(reqBody) {
 
 function loginUserDto(reqBody) {
     const input = reqBody
+    const errMessages = []
+
     if (validateString(input.username))
-        return { errMessage: "trường 'username' chưa hợp lệ" }
+        errMessages.push("trường 'username' chưa hợp lệ")
     if (validateString(input.password))
-        return { errMessage: "trường 'password' chưa hợp lệ" }
+        errMessages.push("trường 'password' chưa hợp lệ")
+
+    if (errMessages.length > 0)
+                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
     return {
         data: {
             username: input.username,
@@ -46,4 +57,4 @@ function loginUserDto(reqBody) {
     }
 }
 
-module.exports = { createUserDto, loginUserDto }
+    module.exports = { createUserDto, loginUserDto }

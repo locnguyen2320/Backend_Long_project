@@ -1,24 +1,24 @@
 const categoryRepo = require('../repositories/CategoryRepo')
-//business logic 
-function getAll(){
+
+function getAll() {
     return categoryRepo.getAll()
 }
 
-function create(categoryDTO){
-
-    return categoryRepo.create(categoryDTO)
+async function create(categoryDTO, session) {
+    console.log("service", categoryDTO)
+    return categoryRepo.create(categoryDTO,session)
 }
 
-function getByName(name){
+function getByName(name) {
     return categoryRepo.getByName(name)
 }
 
-function getById(id){
+function getById(id) {
     return categoryRepo.getById(id)
 }
 
-function deleteOne(id){
-    return categoryRepo.deleteOne(id)
+function deleteOne(id,session) {
+    return session.withTransaction(categoryRepo.deleteOne(id,session))
 }
 
-module.exports = {getAll,create,getById,getByName,deleteOne}
+module.exports = { getAll, create, getById, getByName,deleteOne }
