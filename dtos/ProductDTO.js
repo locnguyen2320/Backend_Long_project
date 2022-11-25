@@ -6,7 +6,7 @@ function createProductDto(reqBody) {
     if (validateString(input.name))
         errMessages.push("trường 'name' chưa hợp lệ")
     if (validateString(input.description))
-        errMessages.push("trường 'price' chưa hợp lệ")
+        errMessages.push("trường 'description' chưa hợp lệ")
     if (validateString(input.r_category))
         errMessages.push("trường 'category' chưa hợp lệ")
     if (validateString(input.r_trademark))
