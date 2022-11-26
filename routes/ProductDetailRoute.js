@@ -4,7 +4,7 @@ const productDetailService = require("../services/ProductDetailService")
 const { createProductDetailDto } = require("../dtos/ProductDetailDTO")
 const { CustomError } = require("../errors/CustomError")
 const { uploadFile } = require('../middlewares/UploadFile')
-const productDetail = require('../models/ProductDetailModel')
+
 
 const { default: mongoose } = require('mongoose')
 
@@ -19,7 +19,6 @@ router
             const productDetailDTO = createProductDetailDto({...req.body,img})
             if (productDetailDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(productDetailDTO.errMessage, 400)
-
             const createdProductDetail = await productDetailService.create(productDetailDTO.data, session)
 
             await session.commitTransaction()
