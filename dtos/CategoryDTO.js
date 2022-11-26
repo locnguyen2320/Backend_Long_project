@@ -25,4 +25,4 @@ function updateCategoryDto(reqBody){
 }
 
 
-module.exports = { createCategoryDto }
+module.exports = { createCategoryDto,updateCategoryDto }

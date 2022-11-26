@@ -44,14 +44,6 @@ router
             res.status(500).json(error)
         }
     })
-    .delete('/:id',(req,res)=>{
-        trademarkService.deleteOne(req.params.id)
-        .then(trademark=>{
-            return res.status(200).json(trademark);
-        })
-        .catch(err=>{
-            res.status(400).json({message:err})
-        })
-    })
+    
 
 module.exports = { router }

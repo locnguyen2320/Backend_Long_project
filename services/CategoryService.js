@@ -18,7 +18,7 @@ function getById(id) {
 }
 
 function deleteOne(id,session) {
-    return session.withTransaction(categoryRepo.deleteOne(id,session))
+    return categoryRepo.deleteOne(id,session)
 }
 
 module.exports = { getAll, create, getById, getByName,deleteOne }

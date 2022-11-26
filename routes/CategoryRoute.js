@@ -43,14 +43,26 @@ router
             res.status(500).json(error)
         }
     })
-    .delete('/:id',(req,res)=>{
-        categoryService.remove(req.params.id)
-        .then(category=>{
-            return res.status(200).json(category);
-        })
-        .catch(err=>{
-            res.status(400).json({message:err})
-        })
-    })
+    .delete("/:id", async (req, res) => {
+        const session = await mongoose.startSession()
+        session.startTransaction()
+        try {
+            const deletedCategory = await categoryService.deleteOne(req.params.id, session)
 
+            await session.commitTransaction()
+            res.status(201).json(deletedCategory)
+
+        } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
+
+            if (error instanceof CustomError)
+                res.status(error.code).json({ message: error.message })
+            else
+                res.status(500).json("Server has something wrong!!")
+            console.error(error.toString())
+        }
+
+    })
+    
 module.exports = { router }

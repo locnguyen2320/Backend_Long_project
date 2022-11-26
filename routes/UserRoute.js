@@ -66,15 +66,7 @@ router
             res.status(500).json(error)
         }
     })
-    .delete('/:id',(req,res)=>{
-        userService.deleteOne(req.params.id)
-        .then(user=>{
-            return res.status(200).json(user);
-        })
-        .catch(err=>{
-            res.status(400).json({message:err})
-        })
-    })
+    
     .get("/", verifyToken, (req, res) => {
         try {
             return res.status(200).json(req.user)

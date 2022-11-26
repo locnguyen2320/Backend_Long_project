@@ -7,6 +7,7 @@ const {uploadFile} = require("../middlewares/UploadFile")
 const { verifyToken } = require("../middlewares/VerifyToken")
 
 const { default: mongoose } = require('mongoose')
+const product = require('../models/ProductModel')
 
 router
 .post("/", async (req, res) => {
@@ -42,5 +43,6 @@ router
             res.status(500).json(error)
         }
     })
+   
 
 module.exports = { router }
