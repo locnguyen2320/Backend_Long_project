@@ -1,16 +1,19 @@
 const mongoose = require('mongoose')
 const abstractModel = require('./AbstractModel')
+const SIZEENUM = require('../enums/Size')
+const COLORENUM = require('../enums/Color')
 
 const productSchema = new mongoose.Schema({
     ...abstractModel,
     color: {
         type: String,
-        require: true
+        enum: Object.values(COLORENUM).map(v => v),
+        default: "black"
     },
     size: {
         type: String,
-        maxLength:4,
-        minLength:1
+        enum: Object.values(SIZEENUM).map(v => v),
+        default: "40"
     },
     img: {
         type:String,

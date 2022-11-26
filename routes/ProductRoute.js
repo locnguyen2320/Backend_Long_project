@@ -3,7 +3,6 @@ const router = Router({ mergeParams: true })
 const productService = require("../services/productService")
 const { createProductDto } = require("../dtos/productDTO")
 const { CustomError } = require("../errors/CustomError")
-const {uploadFile} = require("../middlewares/UploadFile")
 
 const { default: mongoose } = require('mongoose')
 
@@ -34,8 +33,8 @@ router
     })
     .get("/", async (req, res) => {
         try {
-            const categories = await productService.getAll()
-            return res.status(200).json(categories)
+            const products = await productService.getAll()
+            return res.status(200).json(products)
         } catch (error) {
             res.status(500).json(error)
         }

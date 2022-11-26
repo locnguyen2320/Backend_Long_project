@@ -9,7 +9,7 @@ const verifyToken = (req,res,next) => {
         req.user = decoded
         return next()
     } catch (error) {
-        console.log(error.toString())
+        (error.toString())
         return res.status(401).json({ message: "token không hợp lệ" })
     }
 }

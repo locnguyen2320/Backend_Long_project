@@ -1,4 +1,4 @@
-const { validateNumber } = require("../validations/IsEmpty")
+const { validateNumber, validateString } = require("../validations/IsEmpty")
 
 function createImportOrderDetailDto(reqBody, index) {
     const input = reqBody
@@ -14,15 +14,15 @@ function createImportOrderDetailDto(reqBody, index) {
     if (validateNumber(input.exportPrice) && input.exportPrice < 0) {
         errMessages.push(`trường 'importOrderDetail.exportPrice' tại index ${index} chưa hợp lệ`)
     }
-    if (validateString(input.r_productDetail) ) {
+    if (validateString(input.r_productDetail)) {
         errMessages.push(`trường 'importOrderDetail.r_productDetail' tại index ${index} chưa hợp lệ`)
     }
 
     if (errMessages.length > 0)
-                return {errMessage: errMessages.reduce((total,err) => `${total} ${err} ---`,"")}
+        return { errMessage: errMessages.reduce((total, err) => `${total} ${err} ---`, "") }
 
 
     return { data: { quantity: input.quantity, price: input.price, r_productDetail: input.r_productDetail } }
 }
 
-module.exports = {createImportOrderDetailDto}
+module.exports = { createImportOrderDetailDto }

@@ -1,8 +1,7 @@
 const { validateString, validateEmail, validatePhone, validateEnum } = require("../validations/IsEmpty")
-const UserRoleEnum = require("../enums/UserRole")
+const USERROLEENUM = require("../enums/UserRole")
 
 function createUserDto(reqBody) {
-    console.log(reqBody)
     const input = reqBody
     const errMessages = []
 
@@ -19,7 +18,7 @@ function createUserDto(reqBody) {
     if (validateString(input.address)) {
         input.address = ""
     }
-    if (validateEnum(UserRoleEnum, input.role))
+    if (validateEnum(USERROLEENUM, input.role))
         errMessages.push("trường 'role' chưa hợp lệ")
 
     if (errMessages.length > 0)
@@ -32,7 +31,7 @@ function createUserDto(reqBody) {
             name: input.name,
             email: input.email,
             phone: input.phone,
-            role: UserRoleEnum[input.role],
+            role: input.role,
             address: input.address
         }
     }

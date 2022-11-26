@@ -1,29 +1,28 @@
 const { Router } = require('express')
 const router = Router({ mergeParams: true })
-const trademarkService = require("../services/TrademarkService")
-const { createTrademarkDto } = require("../dtos/TrademarkDTO")
+const productDetailService = require("../services/ProductDetailService")
+const { createProductDetailDto } = require("../dtos/ProductDetailDTO")
 const { CustomError } = require("../errors/CustomError")
-const { uploadFile } = require('../middlewares/UploadFile')
+const {uploadFile} = require("../middlewares/UploadFile")
 
 const { default: mongoose } = require('mongoose')
 
 router
-    .post("/",uploadFile,  async (req, res) => {
+    .post("/", uploadFile, async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
-
         try {
             let img = ""
             if(req.file !== null && req.file !== undefined)
                 img = req.file.filename
-            const trademarkDTO = createTrademarkDto({...req.body,img})
-            if (trademarkDTO.hasOwnProperty("errMessage"))
-                throw new CustomError(trademarkDTO.errMessage, 400)
-
-            const createdTrademark = await trademarkService.create(trademarkDTO.data, session)
+            const productDetailDTO = createProductDetailDto({...req.body,img})
+            if (productDetailDTO.hasOwnProperty("errMessage"))
+                throw new CustomError(productDetailDTO.errMessage, 400)
+            const createdproductDetail = await productDetailService.create({...productDetailDTO.data}, session)
 
             await session.commitTransaction()
-            res.status(201).json(createdTrademark)
+            res.status(201).json(createdproductDetail)
+
         } catch (error) {
             await session.abortTransaction();
             session.endSession();
@@ -35,14 +34,6 @@ router
             console.error(error.toString())
         }
 
-    })
-    .get("/", async (req, res) => {
-        try {
-            const trademarks = await trademarkService.getAll()
-            return res.status(200).json(trademarks)
-        } catch (error) {
-            res.status(500).json(error)
-        }
     })
 
 module.exports = { router }

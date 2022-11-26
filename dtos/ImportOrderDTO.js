@@ -1,4 +1,4 @@
-const { validateNumber, validateArray } = require("../Validations/IsEmpty")
+const { validateNumber, validateArray , validateDate} = require("../Validations/IsEmpty")
 const { createImportOrderDetailDto } = require("./ImportOrderDetailDTO")
 function createImportOrderDto(reqBody) {
     const input = reqBody
@@ -7,14 +7,14 @@ function createImportOrderDto(reqBody) {
 
     if (validateNumber(input.totalPrice) && input.totalPrice < 0)
         errMessages.push("trường 'totalPrice' chưa hợp lệ")
-    if (validateArray(input.details)) {
-        errMessages.push("array 'details' chưa hợp lệ")
+    if (validateArray(input.r_importDetails)) {
+        errMessages.push("array 'r_importDetails' chưa hợp lệ")
         input.details = []
     }
     if (validateDate(input.importedAt))
         errMessages.push("trường 'importedAt' chưa hợp lệ")
 
-    input.details.forEach((detail, index) => {
+    input.r_importDetails.forEach((detail, index) => {
         const importOrderDetailDto = createImportOrderDetailDto(detail, index)
         if (importOrderDetailDto.hasOwnProperty("errMessage")) {
             errMessages.push(`${importOrderDetailDto.errMessage}`)

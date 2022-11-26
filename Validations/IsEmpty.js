@@ -1,4 +1,5 @@
 const {isValidDate} = require("../helpers/moment")
+const ObjectId = require('mongoose').Types.ObjectId;
 
 function validateString(input) {
   if (
@@ -22,8 +23,9 @@ function validateNumber(input) {
 }
 
 function validateArray(input) {
+  console.log(typeof (input))
   if (
-    typeof (input) !== "array" ||
+    typeof (input) !== "object" ||
     input === null ||
     input === undefined ||
     input.length <= 0
@@ -31,8 +33,9 @@ function validateArray(input) {
     return true
   return false
 }
+
 function validateEnum(Enum, input) {
-  return !Object.keys(Enum).includes(input)
+  return !Object.values(Enum).includes(input)
 
 }
 
@@ -77,6 +80,14 @@ function validateDate(input) {
   return true;
 }
 
+function validateObjectId(input) {
+  if (
+    ObjectId.isValid(input)
+  )
+    return false
+  return true;
+}
 
-module.exports = { validateArray, validateNumber, validateString, validateEnum, validateEmail, validatePhone, validateDate }
+
+module.exports = {validateObjectId, validateArray, validateNumber, validateString, validateEnum, validateEmail, validatePhone, validateDate }
 

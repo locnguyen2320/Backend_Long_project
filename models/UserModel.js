@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const abstractModel  = require("./AbstractModel");
+const USERROLEENUM = require('../enums/UserRole')
 
 const userSchema = new mongoose.Schema({
     ...abstractModel,
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['Admin','Customer','Employee'],
+        enum: Object.values(USERROLEENUM).map(v => v),
         default: 'Customer'
     },
     name: {

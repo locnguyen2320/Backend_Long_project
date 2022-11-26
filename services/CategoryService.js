@@ -4,9 +4,12 @@ function getAll() {
     return categoryRepo.getAll()
 }
 
-async function create(categoryDTO, session) {
-    console.log("service", categoryDTO)
+function create(categoryDTO, session) {
     return categoryRepo.create(categoryDTO,session)
+}
+
+function update(categoryDTO, session) {
+    return categoryRepo.updateOne(categoryDTO,session)
 }
 
 function getByName(name) {
@@ -21,4 +24,4 @@ function deleteOne(id,session) {
     return session.withTransaction(categoryRepo.deleteOne(id,session))
 }
 
-module.exports = { getAll, create, getById, getByName,deleteOne }
+module.exports = { getAll, create, getById, getByName,deleteOne , update}
