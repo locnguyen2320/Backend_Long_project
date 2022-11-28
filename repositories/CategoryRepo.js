@@ -17,7 +17,7 @@ const getByName = (name) => {
 }
 
 const deleteOne = (id,session) => {
-    return category.findOneAndUpdate({ _id: id }, { active: false }).session(session)
+    return category.findOneAndUpdate({ _id: id }, { active: false }, { new: true }).session(session)
 }
 
 const updateOne = ({id, name, img },session) => {

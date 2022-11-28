@@ -70,7 +70,7 @@ router
         }
     })
     .delete('/:id',(req,res)=>{
-        categoryService.remove(req.params.id)
+        categoryService.deleteOne(req.params.id)
         .then(category=>{
             return res.status(200).json(category);
         })
