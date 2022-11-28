@@ -1,7 +1,7 @@
-const importOrder = require("../models/ImportOrderModel");
+const importOrder = require("../models/ImportOrder");
 
-const create = ({totalPrice, r_productDetails, r_user},session) => {
-    return importOrder.create([{ totalPrice, r_productDetails, r_user }],{session});
+const create = ({totalPrice, r_importOrderDetails, r_user},session) => {
+    return importOrder.create([{ totalPrice, r_importOrderDetails, r_user }],{session});
 }
 
 const getAll = () => {

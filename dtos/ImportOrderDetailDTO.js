@@ -22,7 +22,7 @@ function createImportOrderDetailDto(reqBody, index) {
         return { errMessage: errMessages.reduce((total, err) => `${total} ${err} ---`, "") }
 
 
-    return { data: { quantity: input.quantity, price: input.price, r_productDetail: input.r_productDetail } }
+    return { data: { quantity: input.quantity, importPrice: input.importPrice,exportPrice: input.exportPrice, r_productDetail: input.r_productDetail } }
 }
 
 module.exports = { createImportOrderDetailDto }

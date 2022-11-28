@@ -1,11 +1,14 @@
 const importOrderDetailRepo = require('../repositories/ImportOrderDetailRepo')
 
-function getAll(){
-    return importOrderDetailRepo.getAll()
+function getAll(session){
+    return importOrderDetailRepo.getAll(session)
 }
 
 function create(importOrderDetailDTO, session){
     return importOrderDetailRepo.create(importOrderDetailDTO, session)
 }
 
-module.exports = {getAll,create,}
+function createMany(importOrderDetails, session){
+    return importOrderDetailRepo.createMany(importOrderDetails, session)
+}
+module.exports = {getAll,create,createMany}

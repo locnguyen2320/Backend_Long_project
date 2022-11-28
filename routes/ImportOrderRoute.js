@@ -9,25 +9,26 @@ const { createImportOrderDto } = require('../dtos/ImportOrderDTO')
 const { default: mongoose } = require('mongoose')
 
 router
-    .post("/", async (req, res) => {
+    .post("/",verifyToken, async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
         try {
             const importOrderDTO = createImportOrderDto(req.body)
             if (importOrderDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(importOrderDTO.errMessage, 400)
-            importOderDTO.data['r_user'] = req.user._id
+            importOrderDTO.data['r_user'] = req.user._id
             const createdImportOrder = await importOrderService.create(importOrderDTO.data, session)
             await session.commitTransaction()
             res.status(201).json(createdImportOrder)
         } catch (error) {
             await session.abortTransaction();
-            session.endSession();
+
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
                 res.status(500).json("Server has something wrong!!")
-            console.error(error.toString())
+        }finally{
+            session.endSession();
         }
 
     })

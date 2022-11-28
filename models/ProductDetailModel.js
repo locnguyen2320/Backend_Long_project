@@ -23,6 +23,10 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "product"
     },
+    r_consignment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'consignment'
+    }
 })
 
 const productDetail = mongoose.model("productDetail",productSchema)

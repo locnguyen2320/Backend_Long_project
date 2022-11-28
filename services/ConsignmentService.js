@@ -9,4 +9,9 @@ function create(consignmentDTO,session){
     return consignmentRepo.create(consignmentDTO, session)
 }
 
-module.exports = {getAll,create}
+function createMany(consignments,session){
+    
+    return consignmentRepo.createMany(consignments, session)
+}
+
+module.exports = {getAll,create, createMany}

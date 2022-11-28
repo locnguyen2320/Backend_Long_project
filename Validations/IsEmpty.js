@@ -23,7 +23,6 @@ function validateNumber(input) {
 }
 
 function validateArray(input) {
-  console.log(typeof (input))
   if (
     typeof (input) !== "object" ||
     input === null ||
@@ -76,8 +75,8 @@ function validateDate(input) {
     input === undefined ||
     isValidDate(input)
   )
-    return false
-  return true;
+    return true
+  return false;
 }
 
 function validateObjectId(input) {
