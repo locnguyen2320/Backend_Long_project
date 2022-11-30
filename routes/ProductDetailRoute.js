@@ -24,6 +24,7 @@ router
             res.status(201).json(createdproductDetail)
 
         } catch (error) {
+            (error)
             await session.abortTransaction();
             session.endSession();
 

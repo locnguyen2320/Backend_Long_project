@@ -6,7 +6,7 @@ const exportOrderSchema = new mongoose.Schema({
     ...abstractModel,
     totalBill: {
         type: Number,
-        required: true,
+        required: "trướng 'totalBill' bắt buộc phải truyển",
         min: 0
     },
     status: {
@@ -18,33 +18,28 @@ const exportOrderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    status: {
-        type: String,
-        enum: ["in_stock", "out_of_stock", "comming_out_of_stock"],
-        default: "in_stock"
-    },
-    user: {
+    r_user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     },
     address: {
         type: String,
-        required: true,
+        required: "trướng 'address' bắt buộc phải truyển",
     },
     name: {
         type: String,
-        required: true
+        required: "trướng 'name' bắt buộc phải truyển"
     },
     phone: {
         type: String,
-        required: true,
+        required: "trướng 'phone' bắt buộc phải truyển",
         maxLength: 11
     },
     email: {
         type: String,
-        required: true
+        required: "trướng 'email' bắt buộc phải truyển"
     },
-    r_exportOrderDetail:[{
+    r_exportOrderDetails :[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "exportOrderDetail"
     }]

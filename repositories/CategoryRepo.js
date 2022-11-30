@@ -21,7 +21,7 @@ const deleteOne = (id,session) => {
 }
 
 const updateOne = ({id, name, img },session) => {
-    return category.findOneAndUpdate({ _id: id }, { name, img }, { new: true }).session(session);
+    return category.findOneAndUpdate({ _id: id }, { name, img, updatedAt: new Date()}, { new: true }).session(session);
 }
 
 module.exports = { create, getByName, getAll,  deleteOne, updateOne }

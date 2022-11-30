@@ -87,6 +87,17 @@ function validateObjectId(input) {
   return true;
 }
 
+function validateObject(input) {
+  if (
+    typeof input !== "object" ||
+    input === null ||
+    input === undefined ||
+    Object.keys(input).length <=0
+  )
+    return true
+  return false;
+}
 
-module.exports = {validateObjectId, validateArray, validateNumber, validateString, validateEnum, validateEmail, validatePhone, validateDate }
+
+module.exports = {validateObject, validateObjectId, validateArray, validateNumber, validateString, validateEnum, validateEmail, validatePhone, validateDate }
 

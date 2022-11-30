@@ -1,21 +1,12 @@
 const mongoose = require("mongoose");
 const abstractModel  = require("./AbstractModel");
+const CONSIGNMENTSTATUS = require("../enums/ConsignmentStatus")
 
 const consignmentSchema = new mongoose.Schema({
     ...abstractModel,
-    importPrice: {
-        type: Number,
-        required: true,
-        min: 0
-    },
-    exportPrice: {
-        type: Number,
-        required: true,
-        min: 0
-    },
     quantity: {
         type: Number,
-        required: true,
+        required: "trường 'quantity' bắt buộc phải truyền",
         min: 1
     },
     importedAt: {
@@ -24,8 +15,8 @@ const consignmentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["in_stock", "out_of_stock", "comming_out_of_stock"],
-        default: "in_stock"
+        enum: Object.values(CONSIGNMENTSTATUS).map(v => v),
+        default: "new"
     },
     r_productDetail: {
         type: mongoose.Schema.Types.ObjectId,

@@ -7,13 +7,13 @@ const paymentSchema = new mongoose.Schema({
     ...abstractModel,
     momoId: {
         type: Number,
-        require: true,
+        require: "trướng 'momoId' bắt buộc phải truyển",
         min: 0
     },
     status: {
         type: String,
         enum: Object.values(PAYMENTSTATUSENUM).map(v => v),
-        default: 'new'
+        default: 'pending'
     },
     type: {
         type: String,

@@ -5,7 +5,7 @@ const trademarkSchema = new mongoose.Schema({
     ...abstractModel,
     name: {
         type: String,
-        required: true,
+        required: "trướng 'name' bắt buộc phải truyển",
     },
     img: {
         type: String,

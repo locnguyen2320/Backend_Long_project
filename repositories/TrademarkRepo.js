@@ -21,7 +21,7 @@ const deleteOne = (id,session) => {
 }
 
 const updateOne = ({id, name, img },session) =>{
-    return trademark.findOneAndUpdate({_id: id},{ name, img }, {new:true}).session(session);
+    return trademark.findOneAndUpdate({_id: id},{ name, img, updatedAt: new Date() }, {new:true}).session(session);
 }
 
 module.exports = {create , getAll, getByName, getAllInActive, deleteOne, updateOne}

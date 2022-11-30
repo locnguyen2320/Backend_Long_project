@@ -5,13 +5,18 @@ const productSchema = new mongoose.Schema({
     ...abstractModel,
     name: {
         type: String,
-        require: true
+        require: "trướng 'name' bắt buộc phải truyển"
+    },
+    price: {
+        type: Number,
+        min: 0,
+        require: "trướng 'price' bắt buộc phải truyển"
     },
     description: {
         type: String,
         default: ""
     },
-    r_productDetail: [{
+    r_productDetails: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "productDetail"
     }],

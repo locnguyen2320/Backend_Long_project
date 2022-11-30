@@ -1,7 +1,7 @@
 const product = require("../models/ProductModel");
 
-const create = async ({ name, description, r_productDetail, r_category, r_trademark }, session) => {
-    return product.create([{ name, description, r_productDetail, r_category, r_trademark }], { session });
+const create = async ({ price, name, description, r_category, r_trademark }, session) => {
+    return product.create([{price, name, description, r_category, r_trademark }], { session });
 }
 
 const getAll = () => {
@@ -11,7 +11,16 @@ const getAll = () => {
         .populate("r_productDetail");
 };
 
+const pushOneProductDetail = ({id, r_productDetail},session) => {
+    return product.findOneAndUpdate(
+        { _id: id }, 
+        { $push: { r_productDetails: r_productDetail, updatedAt: new Date() } },
+        {new: true}
+    ).session(session);
+};
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    pushOneProductDetail
 };

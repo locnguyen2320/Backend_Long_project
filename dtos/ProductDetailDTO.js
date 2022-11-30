@@ -1,4 +1,4 @@
-const {  validateEnum, validateObjectId } = require("../Validations/IsEmpty")
+const {  validateEnum, validateObjectId } = require("../validation/validation")
 const COLORENUM = require("../enums/Color")
 const SIZEENUM = require("../enums/Size")
 

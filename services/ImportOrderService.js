@@ -13,21 +13,11 @@ function getAll() {
 async function create(importOrderDTO, session) {
     try {
         const details = importOrderDTO.r_importOrderDetails
-        const creatingImportOrderDetails = []
         const creatingConsignments = []
         const updatingProductDetails = []
         details.forEach(detail => {
-            creatingImportOrderDetails.push(
-                {
-                    quantity: detail.quantity,
-                    price: detail.importPrice,
-                    r_productDetail: detail.r_productDetail
-                }
-            )
             creatingConsignments.push(
                 {
-                    importPrice: detail.importPrice,
-                    exportPrice: detail.exportPrice,
                     quantity: detail.quantity,
                     importedAt: importOrderDTO.importedAt,
                     r_productDetail: detail.r_productDetail
@@ -40,7 +30,7 @@ async function create(importOrderDTO, session) {
             updatingProductDetails.push(productDetailRepo.updateNullConsignment({id: consignment.r_productDetail, r_consignment: consignment._id},session))    
         })
         await Promise.all(updatingProductDetails)
-        const createdImportProductDetails = await importOrderDetailService.createMany(creatingImportOrderDetails, session)
+        const createdImportProductDetails = await importOrderDetailService.createMany(details, session)
         const createdImportOrder = await importOrderRepo.create({
             totalPrice: importOrderDTO.totalPrice,
             r_importOrderDetails: createdImportProductDetails,

@@ -1,5 +1,6 @@
-const { validateNumber, validateArray , validateDate} = require("../Validations/IsEmpty")
+const { validateNumber, validateArray } = require("../validation/validation")
 const { createImportOrderDetailDto } = require("./ImportOrderDetailDTO")
+
 function createImportOrderDto(reqBody) {
     const input = reqBody
     const errMessages = []

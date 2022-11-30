@@ -5,7 +5,7 @@ const importOrderSchema = new mongoose.Schema({
     ...abstractModel,
     totalPrice: {
         type: Number,
-        require: true,
+        require: "trướng 'totalPrice' bắt buộc phải truyển",
         min: 0
     },
     r_importOrderDetails: [{

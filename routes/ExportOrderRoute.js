@@ -2,32 +2,33 @@ const { Router } = require('express')
 const router = Router({ mergeParams: true })
 
 const { CustomError } = require('../errors/CustomError')
-const importOrderService = require("../services/ImportOrderService")
+const exportOrderService = require("../services/ExportOrderService")
 const { verifyToken } = require("../middlewares/VerifyToken")
-const { createImportOrderDto } = require('../dtos/ImportOrderDTO')
+const { createExportOrderDto } = require('../dtos/ExportOrderDTO')
 
 const { default: mongoose } = require('mongoose')
 
 router
-    .post("/",verifyToken, async (req, res) => {
+    .post("/", verifyToken, async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
         try {
-            const importOrderDTO = createImportOrderDto(req.body)
-            if (importOrderDTO.hasOwnProperty("errMessage"))
-                throw new CustomError(importOrderDTO.errMessage, 400)
-            importOrderDTO.data['r_user'] = req.user.id
-            const createdImportOrder = await importOrderService.create(importOrderDTO.data, session)
+            const exportOrderDTO = createExportOrderDto(req.body)
+            if (exportOrderDTO.hasOwnProperty("errMessage"))
+                throw new CustomError(exportOrderDTO.errMessage, 400)
+            exportOrderDTO.data['r_user'] = req.user.id
+            const createdExportOrder = await exportOrderService.create(exportOrderDTO.data, session)
             await session.commitTransaction()
-            res.status(201).json(createdImportOrder)
+            res.status(201).json(createdExportOrder)
         } catch (error) {
+            console.log(error)
             await session.abortTransaction();
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
                 res.status(500).json("Server has something wrong!!")
-        }finally{
+        } finally {
             session.endSession();
         }
 

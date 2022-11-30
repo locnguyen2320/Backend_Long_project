@@ -1,4 +1,4 @@
-const { validateString, validateEmail, validatePhone, validateEnum } = require("../validations/IsEmpty")
+const { validateString, validateEmail, validatePhone, validateEnum } = require("../validation/validation")
 const USERROLEENUM = require("../enums/UserRole")
 
 function createUserDto(reqBody) {
