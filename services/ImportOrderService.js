@@ -14,7 +14,6 @@ async function create(importOrderDTO, session) {
     try {
         const details = importOrderDTO.r_importOrderDetails
         const creatingConsignments = []
-        const updatingProductDetails = []
         details.forEach(detail => {
             creatingConsignments.push(
                 {
@@ -25,11 +24,7 @@ async function create(importOrderDTO, session) {
             )
         });
 
-        const createdConsignments = await consignmentService.createMany(creatingConsignments, session)
-        createdConsignments.forEach(consignment => {
-            updatingProductDetails.push(productDetailRepo.updateNullConsignment({id: consignment.r_productDetail, r_consignment: consignment._id},session))    
-        })
-        await Promise.all(updatingProductDetails)
+        await consignmentService.createMany(creatingConsignments, session)
         const createdImportProductDetails = await importOrderDetailService.createMany(details, session)
         const createdImportOrder = await importOrderRepo.create({
             totalPrice: importOrderDTO.totalPrice,
