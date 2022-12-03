@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
     r_product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "product"
-    },
+    }
 })
 
 const productDetail = mongoose.model("productDetail",productSchema)

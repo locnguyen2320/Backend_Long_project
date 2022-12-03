@@ -17,16 +17,17 @@ router
             const createdproduct = await productService.create({...productDTO.data}, session)
 
             await session.commitTransaction()
+            console.log(createdproduct)
             res.status(201).json(createdproduct)
 
         } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
+            await session.abortTransaction()
+            session.endSession()
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json("Server has something wrong!!")
+                res.status(500).json({message:"Server has something wrong!!"})
             console.error(error.toString())
         }
 
@@ -36,7 +37,8 @@ router
             const products = await productService.getAll()
             return res.status(200).json(products)
         } catch (error) {
-            res.status(500).json(error)
+            console.log(error)
+            res.status(500).json({message:"Server has something wrong!!"})
         }
     })
 

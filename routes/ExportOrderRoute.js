@@ -2,32 +2,34 @@ const { Router } = require('express')
 const router = Router({ mergeParams: true })
 
 const { CustomError } = require('../errors/CustomError')
-const importOrderService = require("../services/ImportOrderService")
+const exportOrderService = require("../services/ExportOrderService")
 const { verifyToken } = require("../middlewares/VerifyToken")
-const { createImportOrderDto } = require('../dtos/ImportOrderDTO')
+const { createExportOrderDto } = require('../dtos/ExportOrderDTO')
 
 const { default: mongoose } = require('mongoose')
 
 router
-    .post("/",verifyToken, async (req, res) => {
+    .post("/", async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
         try {
-            const importOrderDTO = createImportOrderDto(req.body)
-            if (importOrderDTO.hasOwnProperty("errMessage"))
-                throw new CustomError(importOrderDTO.errMessage, 400)
-            importOrderDTO.data['r_user'] = req.user.id
-            const createdImportOrder = await importOrderService.create(importOrderDTO.data, session)
-            await session.commitTransaction()
-            res.status(201).json(createdImportOrder)
+            const exportOrderDTO = createExportOrderDto(req.body)
+            if (exportOrderDTO.hasOwnProperty("errMessage"))
+                throw new CustomError(exportOrderDTO.errMessage, 400)
+            exportOrderDTO.data['r_user'] = "637cc28f2ea02c00042523d2"
+            const result = await exportOrderService.create(exportOrderDTO.data, session)
+            if(result)
+                await session.commitTransaction()
+            return res.status(201).json(result)
         } catch (error) {
+            console.log(error)
             await session.abortTransaction()
-
+            
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
                 res.status(500).json({message:"Server has something wrong!!"})
-        }finally{
+        } finally {
             session.endSession()
         }
 

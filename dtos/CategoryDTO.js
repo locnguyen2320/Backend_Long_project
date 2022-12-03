@@ -1,4 +1,4 @@
-const { validateString, validateObjectId } = require("../validations/IsEmpty")
+const { validateString, validateObjectId } = require("../validation/validation")
 function createCategoryDto(reqBody) {
     const input = reqBody
     const errMessages = []

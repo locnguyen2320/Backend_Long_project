@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 const USERROLEENUM = require('../enums/UserRole')
 
 const userSchema = new mongoose.Schema({
     ...abstractModel,
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: "trướng 'username' bắt buộc phải truyển",
+        unique: "trướng 'username' đã tồn tại"
     },
     password: {
         type: String,
-        required: true,
+        required: "trướng 'password' bắt buộc phải truyển",
     },
     email: {
         type: String,
-        required: true,
+        required: "trướng 'email' bắt buộc phải truyển",
     },
     phone: {
         type: String,
-        required: true,
+        required: "trướng 'phone' bắt buộc phải truyển",
         maxLength: 11
     },
     address: {
@@ -36,10 +36,10 @@ const userSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true,
+        required: "trướng 'name' bắt buộc phải truyển",
     },
-});
+})
 
-const user = mongoose.model("user", userSchema);
+const user = mongoose.model("user", userSchema)
 
-module.exports = user;
+module.exports = user

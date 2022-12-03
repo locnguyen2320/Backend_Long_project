@@ -1,7 +1,7 @@
-const user  = require("../models/UserModel");
+const user  = require("../models/UserModel")
 
 const create = ({username, password, name, phone, email, address, birthday, role},session)=>{
-   return user.create([{username, password, name, phone, email, address, birthday, role}],{session});
+   return user.create([{username, password, name, phone, email, address, birthday, role}],{session})
 }
 
 const getAll = () => {
@@ -25,7 +25,7 @@ const deleteOne = (id,session) => {
 }
 
 const updateOne = ({id, name, phone, email, address, birthday},session) =>{
-    return user.findOneAndUpdate({_id: id},{name, phone, email, address, birthday}, {new:true}).session(session);
+    return user.findOneAndUpdate({_id: id},{name, phone, email, address, birthday, updatedAt: new Date()}, {new:true}).session(session)
 }
 
 module.exports = {create , getAll, getByEmail, getAllInActive, getByUsername, deleteOne, updateOne}

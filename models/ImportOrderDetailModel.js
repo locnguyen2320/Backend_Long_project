@@ -5,12 +5,12 @@ const importOrderDetailSchema = new mongoose.Schema({
     ...abstractModel,
     quantity: {
         type: Number,
-        require: true,
+        require: "trướng 'quantity' bắt buộc phải truyển",
         min: 0
     },
     price: {
         type: Number,
-        require: true,
+        require: "trướng 'price' bắt buộc phải truyển",
         min: 0
     },
     r_productDetail: {

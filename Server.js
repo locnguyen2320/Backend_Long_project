@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -15,7 +15,7 @@ const db = mongoose.connection
 db.on("err",console.error.bind(console,"connection error : "))
 db.once("open",()=>{})
 
-app.use(express.json());
+app.use(express.json())
 app.use(cors({
     origin:"*",
     methods: ["GET","HEAD","PUT","PATCH","POST","DELETE","OPTIONS"],

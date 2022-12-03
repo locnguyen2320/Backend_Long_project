@@ -1,7 +1,10 @@
 const importOrderRepo = require('../repositories/ImportOrderRepo')
+const productDetailRepo = require("../repositories/ProductDetailRepo")
 
 const importOrderDetailService = require("./ImportOrderDetailService")
 const consignmentService = require("./ConsignmentService")
+
+const { CustomError } = require('../errors/CustomError')
 
 function getAll() {
     return importOrderRepo.getAll()
@@ -10,38 +13,28 @@ function getAll() {
 async function create(importOrderDTO, session) {
     try {
         const details = importOrderDTO.r_importOrderDetails
-        const promiseCreateImportOrderDetails = []
-        const promiseCreatedConsignments = []
-
+        const creatingConsignments = []
         details.forEach(detail => {
-            promiseCreateImportOrderDetails.push(
-                importOrderDetailService.create({
-                    quantity: detail.quantity,
-                    price: detail.importPrice,
-                    r_productDetail: detail.r_productDetail
-                }, session))
-            promiseCreatedConsignments.push(
-                consignmentService.create({
-                    importPrice: detail.importPrice,
-                    exportPrice: detail.exportPrice,
+            creatingConsignments.push(
+                {
                     quantity: detail.quantity,
                     importedAt: importOrderDTO.importedAt,
                     r_productDetail: detail.r_productDetail
-                }, session))
-        });
+                }
+            )
+        })
 
-        await Promise.all(promiseCreatedConsignments)
-        const createdImportProductDetails = await Promise.all(promiseCreateImportOrderDetails)
+        await consignmentService.createMany(creatingConsignments, session)
+        const createdImportProductDetails = await importOrderDetailService.createMany(details, session)
         const createdImportOrder = await importOrderRepo.create({
             totalPrice: importOrderDTO.totalPrice,
             r_importOrderDetails: createdImportProductDetails,
             r_user: importOrderDTO.r_user
         }, session)
-
         return Promise.resolve(createdImportOrder)
 
     } catch (error) {
-        throw new CustomError(error.toString(), 500)
+        return Promise.reject(new CustomError(error.toString(),500))
     }
 
 }

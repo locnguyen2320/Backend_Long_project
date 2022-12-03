@@ -1,5 +1,6 @@
-const { validateNumber, validateArray , validateDate} = require("../Validations/IsEmpty")
+const { validateNumber, validateArray } = require("../validation/validation")
 const { createImportOrderDetailDto } = require("./ImportOrderDetailDTO")
+
 function createImportOrderDto(reqBody) {
     const input = reqBody
     const errMessages = []
@@ -11,8 +12,8 @@ function createImportOrderDto(reqBody) {
         errMessages.push("array 'r_importDetails' chưa hợp lệ")
         input.details = []
     }
-    if (validateDate(input.importedAt))
-        errMessages.push("trường 'importedAt' chưa hợp lệ")
+    // if (validateDate(input.importedAt))
+    //     errMessages.push("trường 'importedAt' chưa hợp lệ")
 
     input.r_importDetails.forEach((detail, index) => {
         const importOrderDetailDto = createImportOrderDetailDto(detail, index)

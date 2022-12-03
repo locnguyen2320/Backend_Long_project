@@ -1,23 +1,31 @@
+const { CustomError } = require('../errors/CustomError')
 const userRepo = require('../repositories/UserRepo')
+const bcrypt = require("bcrypt")
+const { signToken } = require('../helpers/signToken')
 
-function getAll(){
-    return userRepo.getAll()
+async function register(userDTO, session){
+    try {
+        const createdUser =  await userRepo.create(userDTO, session)
+        const signedToken = signToken(createdUser)
+        return Promise.resolve(signedToken)
+    } catch (error) {
+        return Promise.reject(new CustomError(error.toString(),500))
+    }
 }
 
-function create(userDTO, session){
-    return userRepo.create(userDTO, session)
+async function login(userDTO){
+    try {
+        const foundUser = await userRepo.getByUsername(userDTO.username)
+        if (!foundUser)
+            throw new CustomError("user không tồn tại", 400)
+        const isSamePassword = await bcrypt.compareSync(userDTO.password, foundUser.password)
+        if (!isSamePassword)
+            throw new CustomError("mật khẩu không trùng khớp", 400)
+        const signedToken = signToken(foundUser)
+        return Promise.resolve(signedToken)
+    } catch (error) {
+        return Promise.reject(new CustomError(error.toString(),500))
+    }
 }
 
-function getById(id){
-    return userRepo.getById(id)
-}
-
-function getByEmail(email){
-    return userRepo.getByEmail(email)
-}
-
-function getByUsername(username){
-    return userRepo.getByUsername(username)
-}
-
-module.exports = {getAll,create,getById,getByEmail,getByUsername}
+module.exports = {register,login}

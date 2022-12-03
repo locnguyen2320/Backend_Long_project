@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 
 const categorySchema = new mongoose.Schema({
     ...abstractModel,
@@ -10,8 +10,8 @@ const categorySchema = new mongoose.Schema({
     img: {
         type: String
     },
-});
+})
 
-const category = mongoose.model("category", categorySchema);
+const category = mongoose.model("category", categorySchema)
 
-module.exports = category;
+module.exports = category
