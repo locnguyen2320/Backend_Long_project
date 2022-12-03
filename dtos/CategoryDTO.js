@@ -22,10 +22,23 @@ function updateCategoryDto(id, reqBody) {
     if (errMessages.length > 0)
         return { errMessage: errMessages.reduce((total, err) => `${total} ${err}---`, "") }
 
-    const data = {id, name: input.name }
+    const data = { id, name: input.name }
     if (input.img !== "")
         data['img'] = input.img
     return { data }
 }
 
-module.exports = { createCategoryDto, updateCategoryDto }
+function deleteCategoryDto(id) {
+    const errMessages = []
+
+    if (validateObjectId(id))
+        errMessages.push("Id không hợp lệ")
+
+    if (errMessages.length > 0)
+        return { errMessage: errMessages.reduce((total, err) => `${total} ${err}---`, "") }
+
+    return { data: { id } }
+
+}
+
+module.exports = { createCategoryDto, updateCategoryDto, deleteCategoryDto }
