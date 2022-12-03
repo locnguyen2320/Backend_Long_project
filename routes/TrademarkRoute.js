@@ -25,13 +25,13 @@ router
             await session.commitTransaction()
             res.status(201).json(createdTrademark)
         } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
+            await session.abortTransaction()
+            session.endSession()
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json("Server has something wrong!!")
+                res.status(500).json({message:"Server has something wrong!!"})
             console.error(error.toString())
         }
 
@@ -41,7 +41,8 @@ router
             const trademarks = await trademarkService.getAll()
             return res.status(200).json(trademarks)
         } catch (error) {
-            res.status(500).json(error)
+            console.log(error)
+            res.status(500).json({message:"Server has something wrong!!"})
         }
     })
 

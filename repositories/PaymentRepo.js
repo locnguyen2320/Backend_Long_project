@@ -1,7 +1,7 @@
-const payment = require("../models/PaymentModel");
+const payment = require("../models/PaymentModel")
 
 const create = ({type, r_exportOrder},session) => {
-    return payment.create([{type, r_exportOrder }],{session});
+    return payment.create([{type, r_exportOrder }],{session})
 }
 
 const getAll = () => {

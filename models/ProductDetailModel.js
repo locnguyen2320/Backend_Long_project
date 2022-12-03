@@ -22,10 +22,6 @@ const productSchema = new mongoose.Schema({
     r_product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "product"
-    },
-    r_consignment: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'consignment'
     }
 })
 

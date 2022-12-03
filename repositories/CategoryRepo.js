@@ -1,11 +1,15 @@
-const category = require("../models/CategoryModel");
+const category = require("../models/CategoryModel")
 
 const create = ({ name, img },session) => {
-    return category.create([{ name, img }],{session});
+    return category.create([{ name, img }],{session})
 }
 
 const getAll = () => {
     return category.find({ active: true })
+}
+
+const getById = (id) => {
+    return category.findById(id)
 }
 
 // const getWithPagination = (paginationOption) => {
@@ -21,7 +25,7 @@ const deleteOne = (id,session) => {
 }
 
 const updateOne = ({id, name, img },session) => {
-    return category.findOneAndUpdate({ _id: id }, { name, img, updatedAt: new Date()}, { new: true }).session(session);
+    return category.findOneAndUpdate({ _id: id }, { name, img, updatedAt: new Date()}, { new: true }).session(session)
 }
 
-module.exports = { create, getByName, getAll,  deleteOne, updateOne }
+module.exports = { create, getByName, getAll,  deleteOne, updateOne, getById }

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 const CONSIGNMENTSTATUS = require("../enums/ConsignmentStatus")
 
 const consignmentSchema = new mongoose.Schema({
@@ -22,8 +22,8 @@ const consignmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "productDetail"
     }
-});
+})
 
-const consignment = mongoose.model("consignment", consignmentSchema);
+const consignment = mongoose.model("consignment", consignmentSchema)
 
-module.exports = consignment;
+module.exports = consignment

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 const EXPORTORDERSTATUSENUM = require("../enums/ExportOrderStatus")
 
 const exportOrderSchema = new mongoose.Schema({
@@ -43,8 +43,8 @@ const exportOrderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "exportOrderDetail"
     }]
-});
+})
 
-const exportOrder = mongoose.model("exportOrder", exportOrderSchema);
+const exportOrder = mongoose.model("exportOrder", exportOrderSchema)
 
-module.exports = exportOrder;
+module.exports = exportOrder

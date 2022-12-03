@@ -2,7 +2,9 @@ const exportOrderDetailRepo = require('../repositories/ExportOrderDetailRepo')
 const exportOrderRepo = require('../repositories/ExportOrderRepo')
 const paymentRepo = require('../repositories/PaymentRepo')
 const consignmentService = require('./ConsignmentService')
+const PAYMENTTYPE = require('../enums/PaymentType')
 const { CustomError } = require('../errors/CustomError')
+const { sendRequestMomo } = require('../helpers/Momo')
 
 async function create(exportOrderDTO, session) {
     try {
@@ -12,8 +14,8 @@ async function create(exportOrderDTO, session) {
             updatingQuantityConsignmentPromise.push(
                 consignmentService.updateConsignment({r_productDetail: detail.r_productDetail, quantity: detail.quantity},session)
             )
-        });
-        console.log(exportOrderDTO)
+        })
+
         await Promise.all(updatingQuantityConsignmentPromise)
         const createdExportOrderDetails = await exportOrderDetailRepo.createMany(details,session)
         const createdExportOrder = await exportOrderRepo.create({
@@ -24,11 +26,17 @@ async function create(exportOrderDTO, session) {
             phone: exportOrderDTO.phone, 
             email: exportOrderDTO.email,
             r_exportOrderDetails: createdExportOrderDetails
-        })
-        await paymentRepo.create({type: exportOrderDTO.paymenttype, r_exportOrder: createdExportOrder[0]})
-        return Promise.resolve(createdExportOrder)
+        },session)
+        const createdPayment = await paymentRepo.create({type: exportOrderDTO.paymentType, r_exportOrder: createdExportOrder[0]},session)
+        if(exportOrderDTO.paymentType === PAYMENTTYPE.MOMO){
+            const payUrl = await sendRequestMomo({exportOrderId: createdExportOrder[0]._id.toString(), paymentId: createdPayment[0]._id.toString(), totalBill: createdExportOrder[0].totalBill})
+        
+            return Promise.resolve({payUrl, type: exportOrderDTO.paymentType})
+        }
+        return Promise.resolve({type: exportOrderDTO.paymentType})
     } catch (error) {
-        throw new CustomError(error.toString(),500)
+        (error)
+        return Promise.reject(new CustomError(error.toString(),500))
     }
 }
 

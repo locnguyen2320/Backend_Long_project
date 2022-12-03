@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 const USERROLEENUM = require('../enums/UserRole')
 
 const userSchema = new mongoose.Schema({
@@ -38,8 +38,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: "trướng 'name' bắt buộc phải truyển",
     },
-});
+})
 
-const user = mongoose.model("user", userSchema);
+const user = mongoose.model("user", userSchema)
 
-module.exports = user;
+module.exports = user

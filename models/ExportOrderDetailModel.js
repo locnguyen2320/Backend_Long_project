@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const abstractModel  = require("./AbstractModel");
+const mongoose = require("mongoose")
+const abstractModel  = require("./AbstractModel")
 
 const exportOrderDetailSchema = new mongoose.Schema({
     ...abstractModel,
@@ -17,8 +17,8 @@ const exportOrderDetailSchema = new mongoose.Schema({
         type:  mongoose.Schema.Types.ObjectId,
         ref: "productDetail"
     }
-});
+})
 
-const exportOrderDetail = mongoose.model("exportOrderDetail", exportOrderDetailSchema);
+const exportOrderDetail = mongoose.model("exportOrderDetail", exportOrderDetailSchema)
 
-module.exports = exportOrderDetail;
+module.exports = exportOrderDetail

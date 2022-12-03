@@ -13,4 +13,4 @@ const abstractModel = {
     },
 }
 
-module.exports = abstractModel;
+module.exports = abstractModel

@@ -22,7 +22,7 @@ async function create(importOrderDTO, session) {
                     r_productDetail: detail.r_productDetail
                 }
             )
-        });
+        })
 
         await consignmentService.createMany(creatingConsignments, session)
         const createdImportProductDetails = await importOrderDetailService.createMany(details, session)
@@ -34,7 +34,7 @@ async function create(importOrderDTO, session) {
         return Promise.resolve(createdImportOrder)
 
     } catch (error) {
-        throw new CustomError(error.toString(), 500)
+        return Promise.reject(new CustomError(error.toString(),500))
     }
 
 }

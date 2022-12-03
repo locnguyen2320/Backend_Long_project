@@ -21,23 +21,16 @@ router
             await session.commitTransaction()
             res.status(201).json(createdImportOrder)
         } catch (error) {
-            await session.abortTransaction();
+            await session.abortTransaction()
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json("Server has something wrong!!")
+                res.status(500).json({message:"Server has something wrong!!"})
         }finally{
-            session.endSession();
+            session.endSession()
         }
 
-    })
-    .get("/", verifyToken, (req, res) => {
-        try {
-            return res.status(200).json()
-        } catch (error) {
-            return res.status(500).json(error.toString())
-        }
     })
 
 module.exports = { router }

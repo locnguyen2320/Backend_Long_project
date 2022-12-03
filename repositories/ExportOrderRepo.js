@@ -1,7 +1,7 @@
-const exportOrder = require("../models/ExportOrderModel");
+const exportOrder = require("../models/ExportOrderModel")
 
 const create = ({totalBill, r_user, address, name, phone, email, r_exportOrderDetails},session) => {
-    return exportOrder.create([{ totalBill, r_user, address, name, phone, email, r_exportOrderDetails }],{session});
+    return exportOrder.create([{ totalBill, r_user, address, name, phone, email, r_exportOrderDetails }],{session})
 }
 
 const updateStatus = ({id, status, isPaid},session) => {

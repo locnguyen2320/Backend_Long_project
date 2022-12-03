@@ -21,16 +21,16 @@ router
             const createdCategory = await categoryService.create({...categoryDTO.data}, session)
 
             await session.commitTransaction()
-            res.status(201).json(createdCategory)
+            res.status(201).json(createdCategory[0])
 
         } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
+            await session.abortTransaction()
+            session.endSession()
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json("Server has something wrong!!")
+                res.status(500).json({message:"Server has something wrong!!"})
             console.error(error.toString())
         }
 
@@ -50,13 +50,13 @@ router
             res.status(201).json(updatedCategory)
 
         } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
+            await session.abortTransaction()
+            session.endSession()
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json("Server has something wrong!!")
+                res.status(500).json({message:"Server has something wrong!!"})
             console.error(error.toString())
         }
 
@@ -66,17 +66,9 @@ router
             const categories = await categoryService.getAll()
             return res.status(200).json(categories)
         } catch (error) {
-            res.status(500).json(error)
+            res.status(500).json({message:"Server has something wrong!!"})
         }
     })
-    .delete('/:id',(req,res)=>{
-        categoryService.remove(req.params.id)
-        .then(category=>{
-            return res.status(200).json(category);
-        })
-        .catch(err=>{
-            res.status(400).json({message:err})
-        })
-    })
+
 
 module.exports = { router }
