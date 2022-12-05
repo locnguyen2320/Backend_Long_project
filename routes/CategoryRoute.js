@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router({ mergeParams: true })
 const categoryService = require("../services/CategoryService")
-const { createCategoryDto, updateCategoryDto } = require("../dtos/CategoryDTO")
+const { createCategoryDto, updateCategoryDto, deleteCategoryDto } = require("../dtos/CategoryDTO")
 const { CustomError } = require("../errors/CustomError")
 const {uploadFile} = require("../middlewares/UploadFile")
 
@@ -69,14 +69,27 @@ router
             res.status(500).json(error)
         }
     })
-    .delete('/:id',(req,res)=>{
-        categoryService.deleteOne(req.params.id)
-        .then(category=>{
-            return res.status(200).json(category);
-        })
-        .catch(err=>{
-            res.status(400).json({message:err})
-        })
+    .delete("/:id",async (req,res) => {
+        const session = await mongoose.startSession()
+        session.startTransaction()
+        try {
+            const categoryDTO = deleteCategoryDto(req.params.id)
+            if (categoryDTO.hasOwnProperty("errMessage"))
+                throw new CustomError(categoryDTO.errMessage, 400)
+            await categoryService.deleteOne(categoryDTO.data.id, session)
+            await session.commitTransaction()
+            res.status(201).json({message: "xoa thanh cong"})
+        } catch (error) {
+            await session.abortTransaction()
+            session.endSession()
+
+            if (error instanceof CustomError)
+                res.status(error.code).json({ message: error.message })
+            else
+                res.status(500).json({message:"Server has something wrong!!"})
+            console.error(error.toString())
+        }
     })
+
 
 module.exports = { router }

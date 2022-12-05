@@ -25,16 +25,16 @@ function updateProductDetailDto(reqBody) {
     const input = reqBody
     const errMessages = []
 
-    if (validateEnum(COLORENUM, input.color))
+    if (input.color !== undefined && validateEnum(COLORENUM, input.color))
         errMessages.push("trường 'color' chưa hợp lệ")
-    if (validateEnum(SIZEENUM, input.size))
+    if (input.size !== undefined && validateEnum(SIZEENUM, input.size))
         errMessages.push("trường 'size' chưa hợp lệ")
     if (validateObjectId(input.id))
         errMessages.push("trường 'id' chưa hợp lệ")
     if (errMessages.length > 0)
         return { errMessage: errMessages.reduce((total, err) => `${total} ${err} ---`, "") }
 
-    const data = { color: input.color, size: input.size }
+    const data = { color: input.color, size: input.size, id: input.id }
     if (input.img !== "")
         data['img'] = input.img
     return { data }

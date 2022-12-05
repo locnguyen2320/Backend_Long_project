@@ -27,12 +27,14 @@ async function update(productDetailDetailDTO, session){
 async function deleteOne(productDetailId, session){
     try {
         await productDetailRepo.deleteOne(productDetailId,session)
-        await consignmentRepo.deleteOne(productDetailId,session)
-        return Promise.resolve()
+        return Promise.resolve({message: "xóa thành công"})
     } catch (error) {
         return Promise.reject(new CustomError(error.toString(),500))
     }
 }
+
+
+
 
 
 module.exports = {create, update, deleteOne}
