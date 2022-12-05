@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router({ mergeParams: true })
 const productDetailService = require("../services/ProductDetailService")
-const { createProductDetailDto } = require("../dtos/ProductDetailDTO")
+const { createProductDetailDto ,updateProductDetailDto } = require("../dtos/ProductDetailDTO")
 const { CustomError } = require("../errors/CustomError")
 const {uploadFile} = require("../middlewares/UploadFile")
 
@@ -35,17 +35,17 @@ router
         }
 
     })
-    .put("/{id}", uploadFile, async (req, res) => {
+    .put("/:id", uploadFile, async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
         try {
             let img = ""
             if(req.file !== null && req.file !== undefined)
                 img = req.file.filename
-            const productDetailDTO = createProductDetailDto({...req.body,img, id: req.params.id})
+            const productDetailDTO = updateProductDetailDto({...req.body,img, id: req.params.id})
             if (productDetailDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(productDetailDTO.errMessage, 400)
-            const updatedproductDetail = await productDetailService.update({...productDetailDTO.data}, session)
+            const updatedproduct = await productDetailService.update({...productDetailDTO.data}, session)
 
             await session.commitTransaction()
             res.status(201).json(updatedproductDetail)

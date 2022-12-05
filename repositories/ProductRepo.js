@@ -25,8 +25,13 @@ const pushOneProductDetail = ({ id, r_productDetail }, session) => {
     ).session(session)
 }
 
+const updateOne = ({id, name, price,description,r_category,r_trademark },session) => {
+    return product.findOneAndUpdate({ _id: id }, { name,price,description,r_category,r_trademark, updatedAt: new Date()}, { new: true }).session(session)
+}
+
 module.exports = {
     create,
     getAll,
-    pushOneProductDetail
+    pushOneProductDetail,
+    updateOne
 }
