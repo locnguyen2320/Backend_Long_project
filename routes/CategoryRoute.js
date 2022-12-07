@@ -24,13 +24,13 @@ router
             res.status(201).json(createdCategory[0])
 
         } catch (error) {
-            await session.abortTransaction()
-            session.endSession()
+            await session.abortTransaction();
+            session.endSession();
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json({message:"Server has something wrong!!"})
+                res.status(500).json("Server has something wrong!!") 
             console.error(error.toString())
         }
 
@@ -50,13 +50,13 @@ router
             res.status(201).json(updatedCategory)
 
         } catch (error) {
-            await session.abortTransaction()
-            session.endSession()
+            await session.abortTransaction();
+            session.endSession();
 
             if (error instanceof CustomError)
                 res.status(error.code).json({ message: error.message })
             else
-                res.status(500).json({message:"Server has something wrong!!"})
+                res.status(500).json("Server has something wrong!!")
             console.error(error.toString())
         }
 
@@ -66,7 +66,7 @@ router
             const categories = await categoryService.getAll()
             return res.status(200).json(categories)
         } catch (error) {
-            res.status(500).json({message:"Server has something wrong!!"})
+            res.status(500).json(error)
         }
     })
     .delete("/:id",async (req,res) => {
