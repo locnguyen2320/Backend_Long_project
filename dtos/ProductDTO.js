@@ -20,4 +20,17 @@ function createProductDto(reqBody) {
     return { data: { name: input.name, price: input.price, description: input.description, r_category: input.r_category, r_trademark: input.r_trademark } }
 }
 
-module.exports = { createProductDto }
+function getProductByIdDto(id){
+    const errMessages = []
+
+    if (validateObjectId(id))
+        errMessages.push("trường 'id' chưa hợp lệ")
+        
+    if (errMessages.length > 0)
+        return { errMessage: errMessages.reduce((total, err) => `${total} ${err} ---`, "") }
+
+
+    return { data: { id } }
+}
+
+module.exports = { createProductDto, getProductByIdDto }
