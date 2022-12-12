@@ -18,10 +18,10 @@ router
             const productDetailDTO = createProductDetailDto({...req.body,img})
             if (productDetailDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(productDetailDTO.errMessage, 400)
-            const createdproductDetail = await productDetailService.create({...productDetailDTO.data}, session)
+            const createproductDetail = await productDetailService.create({...productDetailDTO.data}, session)
 
             await session.commitTransaction()
-            res.status(201).json(createdproductDetail)
+            res.status(201).json(createproductDetail)
 
         } catch (error) {
             (error)
@@ -35,6 +35,15 @@ router
         }
 
     })
+
+    .get("/", async (req, res) => {
+        try {
+            const productdetails = await productDetailService.getAll()
+            return res.status(200).json(productdetails)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    })
     .put("/:id", uploadFile, async (req, res) => {
         const session = await mongoose.startSession()
         session.startTransaction()
@@ -45,7 +54,7 @@ router
             const productDetailDTO = updateProductDetailDto({...req.body,img, id: req.params.id})
             if (productDetailDTO.hasOwnProperty("errMessage"))
                 throw new CustomError(productDetailDTO.errMessage, 400)
-            const updatedproduct = await productDetailService.update({...productDetailDTO.data}, session)
+            const updatedproductDetail = await productDetailService.update({...productDetailDTO.data}, session)
 
             await session.commitTransaction()
             res.status(201).json(updatedproductDetail)

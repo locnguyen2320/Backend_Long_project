@@ -32,9 +32,12 @@ async function deleteOne(productDetailId, session){
         return Promise.reject(new CustomError(error.toString(),500))
     }
 }
+function getAll() {
+    return productDetailRepo.getAll()
+}
 
 
 
 
 
-module.exports = {create, update, deleteOne}
+module.exports = {create, update, deleteOne, getAll}
