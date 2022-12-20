@@ -40,4 +40,4 @@ function getAll() {
 
 
 
-module.exports = {create, update, deleteOne, getAll}
+module.exports = {create, update, deleteOne, getAll }

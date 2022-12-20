@@ -29,28 +29,28 @@ module.exports = (filter) => {
                 localField: "r_productDetails",
                 foreignField: "_id",
                 as: "r_productDetails",
-                pipeline: [
-                    {
-                        $lookup: {
-                            from: "consignments",
-                            localField: "_id",
-                            foreignField: "r_productDetail",
-                            as: "r_consignment",
-                            pipeline: [
-                                {
-                                    $group: {
-                                        "_id": "$r_productDetail",
-                                        "quantity": { $sum: '$quantity' },
-                                    },
+                // pipeline: [
+                //     {
+                //         $lookup: {
+                //             from: "consignments",
+                //             localField: "_id",
+                //             foreignField: "r_productDetail",
+                //             as: "r_consignment",
+                //             pipeline: [
+                //                 {
+                //                     $group: {
+                //                         "_id": "$r_productDetail",
+                //                         "quantity": { $sum: '$quantity' },
+                //                     },
 
-                                }
-                            ]
-                        },
-                    },
-                    {
-                        $unwind: { path: "$r_consignment" },
-                    }
-                ],
+                //                 }
+                //             ]
+                //         },
+                //     },
+                //     {
+                //         $unwind: { path: "$r_consignment" },
+                //     }
+                // ],
             },
         },
 
